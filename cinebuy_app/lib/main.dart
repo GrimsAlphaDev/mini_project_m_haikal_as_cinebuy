@@ -1,7 +1,10 @@
+import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firebase_options.dart';
+import 'package:cinebuy_app/utils/wrapper/wrapper.dart';
 import 'package:cinebuy_app/view/screen/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   /// Dengan memanggil WidgetsFlutterBinding.ensureInitialized(), kita memastikan bahwa binding framework Flutter telah siap digunakan sebelum kode aplikasi Flutter dijalankan, sehingga mencegah kesalahan yang mungkin terjadi jika kita mencoba menggunakan fungsi framework sebelum framework siap digunakan.
@@ -19,14 +22,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Cinebuy',
-      theme: ThemeData.dark(useMaterial3: true),
-      initialRoute: LoginScreen.routeName,
-      routes: {
-        LoginScreen.routeName: (context) => const LoginScreen(),
-      },
+    return MultiProvider(
+      providers: [
+        Provider<AuthService>(
+          create: (_) => AuthService(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Cinebuy',
+        theme: ThemeData.dark(useMaterial3: true),
+        initialRoute: Wrapper.routeName,
+        routes: {
+          Wrapper.routeName: (context) => const Wrapper(),
+          LoginScreen.routeName: (context) => const LoginScreen(),
+        },
+      ),
     );
   }
 }
