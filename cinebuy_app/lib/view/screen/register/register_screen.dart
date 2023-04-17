@@ -1,17 +1,17 @@
 import 'package:cinebuy_app/model/service/auth_service.dart';
-import 'package:cinebuy_app/view/screen/register/register_screen.dart';
+import 'package:cinebuy_app/view/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const String routeName = '/login';
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  static const String routeName = '/register';
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formkey = GlobalKey<FormState>();
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 25,
                 ),
                 const Center(
-                  child: Text('Welcome',
+                  child: Text('Register',
                       style: TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 70)),
@@ -104,17 +104,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () async {
                             if (_formkey.currentState!.validate()) {
-                              await authService.signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                context: context,
-                              );
+                              await authService.createUserWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text);
+                              if (context.mounted) {
+                                Navigator.pop(context);
+                              }
                             }
                           },
                           child: SizedBox(
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: const Text(
-                                'Sign In',
+                                'Sign Up',
                                 textAlign: TextAlign.center,
                               )),
                         ),
@@ -132,13 +133,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Belum memiliki akun?"),
+                          const Text("Sudah memiliki akun?"),
                           TextButton(
                             onPressed: () async {
                               Navigator.pushNamed(
-                                  context, RegisterScreen.routeName);
+                                  context, LoginScreen.routeName);
                             },
-                            child: const Text('Register'),
+                            child: const Text('Login'),
                           ),
                         ],
                       ),
