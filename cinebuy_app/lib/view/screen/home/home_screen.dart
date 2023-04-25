@@ -20,11 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('HomeScreen'),
+              const Text('HomeScreen'),
               const SizedBox(
                 height: 100,
               ),

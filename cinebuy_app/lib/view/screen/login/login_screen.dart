@@ -1,4 +1,5 @@
 import 'package:cinebuy_app/model/service/auth_service.dart';
+import 'package:cinebuy_app/utils/constant/colors.dart';
 import 'package:cinebuy_app/view/screen/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final _formkey = GlobalKey<FormState>();
+  final TextEditingController emailControllerRegis = TextEditingController();
+  final TextEditingController passwordControllerRegis = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _formKeyRegis = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -27,126 +33,200 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 80,
-            ),
-            ClipRRect(
-              child: Image.asset(
-                'assets/images/movies_ilustration.png',
-                height: MediaQuery.of(context).size.height * 0.2,
-                fit: BoxFit.cover,
+            Container(
+              height: 400,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/background.png'),
+                  fit: BoxFit.fill,
+                ),
               ),
-            ),
-            Column(
-              children: [
-                const SizedBox(
-                  height: 25,
-                ),
-                const Center(
-                  child: Text('Welcome',
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 70)),
-                ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Form(
-                    key: _formkey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            hintText: "Masukkan Email",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty || value == '') {
-                              return 'Email tidak boleh kosong';
-                            }
-                            if (value.contains('@') == false) {
-                              return 'Email tidak valid';
-                            }
-                            if (value.contains('.') == false) {
-                              return 'Email tidak valid';
-                            }
-                            return null;
-                          },
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 30,
+                    width: 80,
+                    height: 200,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/light-1.png'),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          obscureText: true,
-                          controller: passwordController,
-                          decoration: const InputDecoration(
-                            hintText: "Masukan Password",
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty || value == '') {
-                              return 'Password tidak boleh kosong';
-                            }
-                            if (value.length < 6) {
-                              return 'Password minimal 6 karakter';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (_formkey.currentState!.validate()) {
-                              await authService.signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                context: context,
-                              );
-                            }
-                          },
-                          child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: const Text(
-                                'Sign In',
-                                textAlign: TextAlign.center,
-                              )),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  Positioned(
+                    left: 140,
+                    width: 80,
+                    height: 150,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/light-2.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 40,
+                    top: 40,
+                    width: 80,
+                    height: 150,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/clock.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Positioned(
+                    child: Center(
+                      child: Text(
+                        'LOGIN',
+                        style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Color.fromRGBO(143, 148, 251, .2),
+                              blurRadius: 20.0,
+                              offset: Offset(0, 10))
+                        ]),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
                         children: [
-                          const Text("Belum memiliki akun?"),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushNamed(
-                                  context, RegisterScreen.routeName);
-                            },
-                            child: const Text('Register'),
+                          Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(color: Colors.grey),
+                              ),
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Email",
+                                hintStyle: TextStyle(color: Colors.grey),
+                              ),
+                              // user input text color set to black
+                              style: const TextStyle(color: Colors.black),
+                              validator: (value) {
+                                if (value!.isEmpty || value == '') {
+                                  return 'Email tidak boleh kosong';
+                                }
+                                if (value.contains('@') == false) {
+                                  return 'Email tidak valid';
+                                }
+                                if (value.contains('.') == false) {
+                                  return 'Email tidak valid';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              obscureText: true,
+                              controller: passwordController,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Password",
+                                hintStyle: TextStyle(color: Colors.grey),
+                              ),
+                              // user input text color set to black
+                              style: const TextStyle(color: Colors.black),
+                              validator: (value) {
+                                if (value!.isEmpty || value == '') {
+                                  return 'Password tidak boleh kosong';
+                                }
+                                if (value.length < 6) {
+                                  return 'Password minimal 6 karakter';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await authService.signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text,
+                          context: context,
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(colors: [
+                            primaryColor,
+                            secondaryColor,
+                          ])),
+                      child: const Center(
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Belum Memiliki Akun ? '),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RegisterScreen.routeName);
+                        },
+                        child: const Text(
+                          "Daftar Sekarang",
+                          style: TextStyle(color: primaryColor),
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            )
           ],
         ),
       ),
