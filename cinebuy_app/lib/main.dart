@@ -1,6 +1,7 @@
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firebase_options.dart';
 import 'package:cinebuy_app/utils/wrapper/wrapper.dart';
+import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
 import 'package:cinebuy_app/view/screen/login/login_screen.dart';
 import 'package:cinebuy_app/view/screen/register/register_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<AuthService>(
           create: (_) => AuthService(),
+        ),
+        Provider<HomeViewModel>(
+          create: (_) => HomeViewModel(),
         ),
       ],
       child: MaterialApp(

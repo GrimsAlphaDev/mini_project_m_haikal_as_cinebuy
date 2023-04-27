@@ -20,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _formKeyRegis = GlobalKey<FormState>();
 
   @override
   void dispose() {
