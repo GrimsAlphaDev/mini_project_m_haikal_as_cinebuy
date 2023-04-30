@@ -32,13 +32,28 @@ class MoviesApi {
         'https://api.themoviedb.org/3/movie/now_playing?api_key=$apiKey',
       );
 
-      debugPrint(response.data['results'].toString());
-
       latestMovies = (response.data['results'] as List)
           .map((item) => MovieModel.fromJson(item))
           .toList();
 
       return latestMovies;
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  Future fetchSearchMovies(String query) async {
+    try {
+      final Response response = await dio.get(
+        'https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query',
+      );
+
+      movies = (response.data['results'] as List)
+          .map((item) => MovieModel.fromJson(item))
+          .toList();
+
+      return movies;
     } catch (e) {
       debugPrint(e.toString());
       rethrow;

@@ -5,8 +5,8 @@ import 'package:cinebuy_app/view/screen/home/home_screen.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
 import 'package:cinebuy_app/view/screen/login/login_screen.dart';
 import 'package:cinebuy_app/view/screen/register/register_screen.dart';
-// import 'package:cinebuy_app/view/screen/search/search_screen.dart';
-// import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
+import 'package:cinebuy_app/view/screen/search/search_screen.dart';
+import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +35,9 @@ class MyApp extends StatelessWidget {
         ListenableProvider<HomeViewModel>(
           create: (_) => HomeViewModel(),
         ),
-        // ListenableProvider<SearchViewModel>(
-        //   create: (_) => SearchViewModel(),
-        // ),
+        ListenableProvider<SearchViewModel>(
+          create: (_) => SearchViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           LoginScreen.routeName: (context) => const LoginScreen(),
           RegisterScreen.routeName: (context) => const RegisterScreen(),
           HomeScreen.routeName: (context) => const HomeScreen(),
-          // SearchScreen.routeName: (context) => const SearchScreen(),
+          SearchScreen.routeName: (context) => const SearchScreen(),
         },
       ),
     );
