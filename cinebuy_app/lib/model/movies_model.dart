@@ -1,40 +1,4 @@
 class MovieModel {
-  int? page;
-  List<Results>? results;
-  int? totalPages;
-  int? totalResults;
-
-  MovieModel(
-      {required this.page,
-      required this.results,
-      required this.totalPages,
-      required this.totalResults});
-
-  MovieModel.fromJson(Map<String, dynamic> json) {
-    page = json['page'];
-    if (json['results'] != null) {
-      results = <Results>[];
-      json['results'].forEach((v) {
-        results?.add(Results.fromJson(v));
-      });
-    }
-    totalPages = json['total_pages'];
-    totalResults = json['total_results'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['page'] = page;
-    if (results != null) {
-      data['results'] = results?.map((v) => v.toJson()).toList();
-    }
-    data['total_pages'] = totalPages;
-    data['total_results'] = totalResults;
-    return data;
-  }
-}
-
-class Results {
   bool? adult;
   String? backdropPath;
   int? id;
@@ -51,24 +15,24 @@ class Results {
   double? voteAverage;
   int? voteCount;
 
-  Results(
-      {required this.adult,
-      required this.backdropPath,
-      required this.id,
-      required this.title,
-      required this.originalLanguage,
-      required this.originalTitle,
-      required this.overview,
-      required this.posterPath,
-      required this.mediaType,
-      required this.genreIds,
-      required this.popularity,
-      required this.releaseDate,
-      required this.video,
-      required this.voteAverage,
-      required this.voteCount});
+  MovieModel(
+      {this.adult,
+      this.backdropPath,
+      this.id,
+      this.title,
+      this.originalLanguage,
+      this.originalTitle,
+      this.overview,
+      this.posterPath,
+      this.mediaType,
+      this.genreIds,
+      this.popularity,
+      this.releaseDate,
+      this.video,
+      this.voteAverage,
+      this.voteCount});
 
-  Results.fromJson(Map<String, dynamic> json) {
+  MovieModel.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     id = json['id'];
@@ -79,10 +43,10 @@ class Results {
     posterPath = json['poster_path'];
     mediaType = json['media_type'];
     genreIds = json['genre_ids'].cast<int>();
-    popularity = json['popularity'];
+    popularity = json['popularity'].toDouble();
     releaseDate = json['release_date'];
     video = json['video'];
-    voteAverage = json['vote_average'];
+    voteAverage = json['vote_average'].toDouble();
     voteCount = json['vote_count'];
   }
 
