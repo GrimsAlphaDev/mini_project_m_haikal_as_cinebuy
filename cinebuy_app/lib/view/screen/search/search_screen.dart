@@ -16,6 +16,12 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _searchController = TextEditingController();
 

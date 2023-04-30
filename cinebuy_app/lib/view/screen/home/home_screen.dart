@@ -1,6 +1,7 @@
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
 import 'package:cinebuy_app/utils/state/finite_state.dart';
+import 'package:cinebuy_app/utils/widget/detail_movies_alert.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -72,39 +73,45 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.only(right: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 300,
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                          'https://image.tmdb.org/t/p/original/${provider.movies[index].posterPath}'),
-                                      fit: BoxFit.fill,
+                            child: GestureDetector(
+                              onTap: () {
+                                detailAlertDialog(
+                                    context, provider.movies[index]);
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 300,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://image.tmdb.org/t/p/original/${provider.movies[index].posterPath}'),
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  '${provider.movies[index].title}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    '${provider.movies[index].title}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)}',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },
@@ -152,58 +159,64 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.only(bottom: 10),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 150,
-                                    height: 200,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            'https://image.tmdb.org/t/p/original/${provider.latestMovies[index].posterPath}'),
-                                        fit: BoxFit.fill,
+                              child: GestureDetector(
+                                onTap: () {
+                                  detailAlertDialog(
+                                      context, provider.latestMovies[index]);
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              'https://image.tmdb.org/t/p/original/${provider.latestMovies[index].posterPath}'),
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 200,
-                                    height: 200,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${provider.latestMovies[index].title}',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
+                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                      width: 200,
+                                      height: 200,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${provider.latestMovies[index].title}',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          'Rating : ${provider.latestMovies[index].voteAverage?.toStringAsFixed(2)}',
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey,
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            'Rating : ${provider.latestMovies[index].voteAverage?.toStringAsFixed(2)}',
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          '${provider.latestMovies[index].overview}',
-                                          maxLines: 5,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey,
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            '${provider.latestMovies[index].overview}',
+                                            maxLines: 5,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.grey,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             );
                           },
