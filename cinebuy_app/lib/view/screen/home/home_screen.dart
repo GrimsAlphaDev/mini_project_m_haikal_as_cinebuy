@@ -1,9 +1,14 @@
 import 'package:cinebuy_app/model/service/auth_service.dart';
+import 'package:cinebuy_app/utils/constant/colors.dart';
+import 'package:cinebuy_app/utils/state/finite_state.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
+// import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String routeName = '/home';
+
   const HomeScreen({super.key});
 
   @override
@@ -16,16 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       final provider = Provider.of<HomeViewModel>(context, listen: false);
-
       provider.getTrendingMovies();
+      provider.getLatestMovies();
     });
   }
-
-  final imageList = [
-    'https://plus.unsplash.com/premium_photo-1682390303097-9ae046bcb3dc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    'https://images.unsplash.com/photo-1682250705830-11c1cecbd3ee?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-    'https://images.unsplash.com/photo-1679678690998-88c8711cbe5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,51 +55,196 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 width: double.infinity,
                 height: 300,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: imageList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 300,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(imageList[index]),
-                                fit: BoxFit.cover,
+                child: Consumer<HomeViewModel>(builder: (context, provider, _) {
+                  switch (provider.myState) {
+                    case MyState.initial:
+                      return const Center(
+                        child: Text('No Data Found'),
+                      );
+                    case MyState.loading:
+                      return const Center(child: CircularProgressIndicator());
+                    case MyState.loaded:
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: provider.movies.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 300,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          'https://image.tmdb.org/t/p/original/${provider.movies[index].posterPath}'),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  '${provider.movies[index].title}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)}',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    default:
+                      return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+              ),
+              Row(
+                children: const [
+                  Text(
+                    'Latest',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '.',
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // vertical list
+              SizedBox(
+                width: double.infinity,
+                child: Consumer<HomeViewModel>(
+                  builder: (context, provider, _) {
+                    switch (provider.myState) {
+                      case MyState.initial:
+                        return const Center(
+                          child: Text('No Data Found'),
+                        );
+                      case MyState.loading:
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      case MyState.loaded:
+                        return ListView.builder(
+                          itemCount: provider.latestMovies.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://image.tmdb.org/t/p/original/${provider.latestMovies[index].posterPath}'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 200,
+                                    height: 200,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${provider.latestMovies[index].title}',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          'Rating : ${provider.latestMovies[index].voteAverage?.toStringAsFixed(2)}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          '${provider.latestMovies[index].overview}',
+                                          maxLines: 5,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            'Movie Title',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          const Text(
-                            'Movie Description',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                            );
+                          },
+                        );
+
+                      default:
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                    }
                   },
                 ),
               ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: primaryColor),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: () {
+                // Navigator.pushNamed(context, SearchScreen.routeName);
+              },
+              child: const Icon(
+                Icons.search,
+              ),
+            ),
+            label: 'Search',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.bookmark_border,
+            ),
+            label: 'Saved',
+          ),
+        ],
       ),
     );
   }

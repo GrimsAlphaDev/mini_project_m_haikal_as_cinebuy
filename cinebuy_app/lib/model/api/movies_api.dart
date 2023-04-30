@@ -7,6 +7,7 @@ class MoviesApi {
   final Dio dio = Dio();
 
   late List<MovieModel> movies;
+  late List<MovieModel> latestMovies;
 
   Future fetchTrendingMovies() async {
     try {
@@ -15,10 +16,29 @@ class MoviesApi {
       );
 
       movies = (response.data['results'] as List)
-          .map((e) => MovieModel.fromJson(e))
+          .map((item) => MovieModel.fromJson(item))
           .toList();
 
-      debugPrint(movies.toString());
+      return movies;
+    } catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+  }
+
+  Future fetchLatestMovies() async {
+    try {
+      final Response response = await dio.get(
+        'https://api.themoviedb.org/3/movie/now_playing?api_key=$apiKey',
+      );
+
+      debugPrint(response.data['results'].toString());
+
+      latestMovies = (response.data['results'] as List)
+          .map((item) => MovieModel.fromJson(item))
+          .toList();
+
+      return latestMovies;
     } catch (e) {
       debugPrint(e.toString());
       rethrow;

@@ -10,6 +10,7 @@ class HomeViewModel with ChangeNotifier {
   final MoviesApi service = MoviesApi();
 
   late List<MovieModel> movies;
+  late List<MovieModel> latestMovies;
 
   void getTrendingMovies() async {
     myState = MyState.initial;
@@ -19,7 +20,30 @@ class HomeViewModel with ChangeNotifier {
       notifyListeners();
 
       movies = await service.fetchTrendingMovies();
-      debugPrint(movies.toString());
+
+      // remove 10 item from movies list
+      movies.removeRange(10, movies.length);
+
+      myState = MyState.loaded;
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+      if (e is DioError) {
+        e.response!.statusCode;
+      }
+      myState = MyState.failed;
+      notifyListeners();
+    }
+  }
+
+  void getLatestMovies() async {
+    myState = MyState.initial;
+    notifyListeners();
+    try {
+      myState = MyState.loading;
+      notifyListeners();
+
+      latestMovies = await service.fetchLatestMovies();
 
       myState = MyState.loaded;
       notifyListeners();
