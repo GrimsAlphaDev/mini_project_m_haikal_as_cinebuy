@@ -2,7 +2,7 @@ import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
 import 'package:cinebuy_app/utils/state/finite_state.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
-// import 'package:cinebuy_app/view/screen/search/search_screen.dart';
+import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Cinebuy'),
         actions: [
           IconButton(
@@ -230,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: GestureDetector(
               onTap: () {
-                // Navigator.pushNamed(context, SearchScreen.routeName);
+                Navigator.pushNamed(context, SearchScreen.routeName);
               },
               child: const Icon(
                 Icons.search,
