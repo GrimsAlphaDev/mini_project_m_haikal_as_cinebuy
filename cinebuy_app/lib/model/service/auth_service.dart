@@ -6,6 +6,15 @@ import 'package:quickalert/quickalert.dart';
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
 
+  String email = '';
+
+  void getUserLoggegIn() {
+    final user = _firebaseAuth.currentUser;
+    if (user != null) {
+      email = user.email!;
+    }
+  }
+
   User? _userFromFirebase(auth.User? user) {
     if (user == null) {
       return null;
@@ -31,6 +40,7 @@ class AuthService {
         type: QuickAlertType.success,
         title: 'Login Berhasil',
       );
+      email = credential.user!.email!;
       return _userFromFirebase(credential.user);
     } catch (e) {
       debugPrint(e.toString());
