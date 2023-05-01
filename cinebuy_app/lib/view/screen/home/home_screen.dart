@@ -1,9 +1,12 @@
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
 import 'package:cinebuy_app/utils/state/finite_state.dart';
+import 'package:cinebuy_app/utils/widget/confirm_logout_alert.dart';
 import 'package:cinebuy_app/utils/widget/detail_movies_alert.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
+import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Cinebuy'),
         actions: [
           IconButton(
-            onPressed: () async {
-              await authService.signOut();
+            onPressed: () {
+              confirmLogout(context, authService);
             },
             icon: const Icon(Icons.logout),
           ),
@@ -252,9 +255,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             label: 'Search',
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(
-              Icons.bookmark_border,
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, SavedScreen.routeName);
+              },
+              child: const Icon(
+                Icons.bookmark_border,
+              ),
             ),
             label: 'Saved',
           ),
@@ -262,4 +270,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  
 }

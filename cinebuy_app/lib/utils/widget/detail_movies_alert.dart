@@ -3,6 +3,7 @@ import 'package:cinebuy_app/model/owned_movies_model.dart';
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firestore_service.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
+import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
@@ -107,6 +108,7 @@ Future<void> detailAlertDialog(BuildContext context, MovieModel movies) async {
                               releaseDate: movies.releaseDate!,
                               posterPath:
                                   'https://image.tmdb.org/t/p/w500${movies.posterPath}',
+                              overview: movies.overview!,
                             );
                             await firestoreService.saveMovie(selectedMovie);
                             debugPrint(
@@ -114,6 +116,8 @@ Future<void> detailAlertDialog(BuildContext context, MovieModel movies) async {
                             if (context.mounted) {
                               if (firestoreService.successAddMovie) {
                                 Navigator.of(context).pop();
+                                Navigator.of(context)
+                                    .pushNamed(SavedScreen.routeName);
                                 QuickAlert.show(
                                   context: context,
                                   type: QuickAlertType.success,

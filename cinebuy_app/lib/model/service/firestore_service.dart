@@ -46,4 +46,15 @@ class FirestoreService {
   Future<void> removeMovie(String ownedMovieId) {
     return _db.collection('movies').doc(ownedMovieId).delete();
   }
+
+  Future<List<OwnedMovieModel>> getMoviesByUser(String userEmail) async {
+    final movies = await _db
+        .collection('movies')
+        .where('userEmail', isEqualTo: userEmail)
+        .get();
+
+    return movies.docs
+        .map((document) => OwnedMovieModel.fromFirestore(document.data()))
+        .toList();
+  }
 }
