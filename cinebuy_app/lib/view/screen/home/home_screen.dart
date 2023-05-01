@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero, () async {
       final provider = Provider.of<HomeViewModel>(context, listen: false);
       provider.getTrendingMovies();
       provider.getLatestMovies();
