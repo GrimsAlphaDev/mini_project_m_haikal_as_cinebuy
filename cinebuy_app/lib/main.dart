@@ -6,6 +6,8 @@ import 'package:cinebuy_app/view/screen/home/home_screen.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
 import 'package:cinebuy_app/view/screen/login/login_screen.dart';
 import 'package:cinebuy_app/view/screen/register/register_screen.dart';
+import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
+import 'package:cinebuy_app/view/screen/saved/saved_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
         Provider<FirestoreService>(
           create: (_) => FirestoreService(),
         ),
+        ListenableProvider(
+          create: (_) => SavedViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -54,6 +59,7 @@ class MyApp extends StatelessWidget {
           RegisterScreen.routeName: (context) => const RegisterScreen(),
           HomeScreen.routeName: (context) => const HomeScreen(),
           SearchScreen.routeName: (context) => const SearchScreen(),
+          SavedScreen.routeName: (context) => const SavedScreen(),
         },
       ),
     );

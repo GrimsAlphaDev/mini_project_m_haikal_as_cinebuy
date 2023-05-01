@@ -5,6 +5,7 @@ class OwnedMovieModel {
   double? voteAverage;
   String releaseDate;
   String posterPath;
+  String? overview;
   String? userEmail;
 
   OwnedMovieModel({
@@ -15,6 +16,7 @@ class OwnedMovieModel {
     required this.releaseDate,
     required this.posterPath,
     required this.userEmail,
+    required this.overview,
   });
 
   Map<String, dynamic> createMap() {
@@ -26,6 +28,7 @@ class OwnedMovieModel {
       'releaseDate': releaseDate,
       'posterPath': posterPath,
       'userEmail': userEmail,
+      'overview': overview,
     };
   }
 
@@ -36,6 +39,7 @@ class OwnedMovieModel {
         voteAverage = map['voteAverage'],
         releaseDate = map['releaseDate'],
         posterPath = map['posterPath'],
+        overview = map['overview'],
         userEmail = map['userEmail'];
 
   /// Simbol : dalam kode yang diatas digunakan untuk mendefinisikan sebuah konstruktor di Dart dengan parameter nama. Itu disebut daftar inisialisasi konstruktor.
