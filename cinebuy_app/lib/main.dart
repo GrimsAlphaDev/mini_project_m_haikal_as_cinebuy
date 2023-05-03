@@ -1,3 +1,4 @@
+
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firebase_options.dart';
 import 'package:cinebuy_app/model/service/firestore_service.dart';
@@ -10,6 +11,8 @@ import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
+import 'package:cinebuy_app/view/screen/stream/stream_screen.dart';
+import 'package:cinebuy_app/view/screen/stream/stream_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +50,9 @@ class MyApp extends StatelessWidget {
         ListenableProvider(
           create: (_) => SavedViewModel(),
         ),
+        ListenableProvider<StreamViewModel>(
+          create: (_) => StreamViewModel(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -60,6 +66,9 @@ class MyApp extends StatelessWidget {
           HomeScreen.routeName: (context) => const HomeScreen(),
           SearchScreen.routeName: (context) => const SearchScreen(),
           SavedScreen.routeName: (context) => const SavedScreen(),
+          StreamScreen.routeName: (context) => const StreamScreen(
+                title: '',
+              ),
         },
       ),
     );

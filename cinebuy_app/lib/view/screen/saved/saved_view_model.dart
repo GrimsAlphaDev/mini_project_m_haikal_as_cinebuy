@@ -27,4 +27,24 @@ class SavedViewModel with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void deleteMovies(String ownedMovieid, String email) async {
+    myState = MyState.initial;
+    notifyListeners();
+
+    try {
+      myState = MyState.loading;
+      notifyListeners();
+
+      await service.removeMovie(ownedMovieid);
+      movies = await service.getMoviesByUser(email);
+
+      myState = MyState.loaded;
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+      myState = MyState.failed;
+      notifyListeners();
+    }
+  }
 }

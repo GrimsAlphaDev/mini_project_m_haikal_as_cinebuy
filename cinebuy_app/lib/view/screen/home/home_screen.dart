@@ -6,7 +6,6 @@ import 'package:cinebuy_app/utils/widget/detail_movies_alert.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -270,6 +269,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  
 }

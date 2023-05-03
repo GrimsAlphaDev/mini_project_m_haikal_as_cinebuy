@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:uuid/uuid.dart';
 
-Future<void> detailAlertDialog(BuildContext context, MovieModel movies) async {
+Future<void> detailAlertDialog(BuildContext context, MovieModel movies,) async {
   final firestoreService =
       Provider.of<FirestoreService>(context, listen: false);
   final authService = Provider.of<AuthService>(context, listen: false);
