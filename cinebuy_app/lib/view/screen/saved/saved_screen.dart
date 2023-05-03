@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
 import 'package:cinebuy_app/utils/state/finite_state.dart';
+import 'package:cinebuy_app/utils/widget/confirm_delete_alert.dart';
 import 'package:cinebuy_app/utils/widget/confirm_logout_alert.dart';
 import 'package:cinebuy_app/view/screen/home/home_screen.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
+import 'package:cinebuy_app/view/screen/stream/stream_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -101,7 +105,14 @@ class _SavedScreenState extends State<SavedScreen> {
                                   padding: const EdgeInsets.only(bottom: 10),
                                   child: GestureDetector(
                                     onTap: () {
-                                      debugPrint('Overall CLicked');
+                                      Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) {
+                                          return StreamScreen(
+                                            title:
+                                                '${provider.movies[index].title} trailer',
+                                          );
+                                        },
+                                      ));
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width,
@@ -135,37 +146,22 @@ class _SavedScreenState extends State<SavedScreen> {
                                             fontSize: 14,
                                           ),
                                         ),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () async {
-                                                // await provider.deleteMovie(
-                                                //   provider.movies[index].id,
-                                                //   authService.email,
-                                                // );
-                                                debugPrint('edit CLicked');
-                                              },
-                                              icon: const Icon(
-                                                Icons.edit,
-                                                color: primaryColor,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () async {
-                                                // await provider.deleteMovie(
-                                                //   provider.movies[index].id,
-                                                //   authService.email,
-                                                // );
+                                        trailing: IconButton(
+                                          onPressed: () {
+                                            confirmDelete(
+                                                context,
+                                                provider
+                                                    .movies[index].ownedMovieId,
+                                                provider
+                                                    .movies[index].userEmail!,
+                                                provider.movies[index].title);
 
-                                                debugPrint('Delete CLicked');
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                          ],
+                                            debugPrint('Delete Clicked');
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
                                         ),
                                       ),
                                     ),
