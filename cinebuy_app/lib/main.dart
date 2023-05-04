@@ -1,4 +1,3 @@
-
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firebase_options.dart';
 import 'package:cinebuy_app/model/service/firestore_service.dart';
@@ -11,6 +10,7 @@ import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
+import 'package:cinebuy_app/view/screen/splash/splash_screen.dart';
 import 'package:cinebuy_app/view/screen/stream/stream_screen.dart';
 import 'package:cinebuy_app/view/screen/stream/stream_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Cinebuy',
         theme: ThemeData.dark(useMaterial3: true),
-        initialRoute: Wrapper.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: {
           Wrapper.routeName: (context) => const Wrapper(),
           LoginScreen.routeName: (context) => const LoginScreen(),
@@ -69,6 +69,7 @@ class MyApp extends StatelessWidget {
           StreamScreen.routeName: (context) => const StreamScreen(
                 title: '',
               ),
+          SplashScreen.routeName: (context) => const SplashScreen(),
         },
       ),
     );
