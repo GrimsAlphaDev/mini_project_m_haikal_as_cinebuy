@@ -37,11 +37,28 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         title: const Text('Cinebuy'),
         actions: [
-          IconButton(
-            onPressed: () {
-              confirmLogout(context, authService);
-            },
-            icon: const Icon(Icons.logout),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: PopupMenuButton(
+              icon: const Icon(Icons.account_circle),
+              itemBuilder: (BuildContext context) {
+                return [
+                  const PopupMenuItem(
+                    value: 'logout',
+                    child: Text('Logout'),
+                  ),
+                ];
+              },
+              onSelected: (String value) {
+                // Handle menu item selection
+                switch (value) {
+                  case 'logout':
+                    confirmLogout(context, authService);
+                    break;
+                }
+              },
+              offset: const Offset(0, 40),
+            ),
           ),
         ],
       ),
@@ -239,31 +256,47 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: primaryColor),
-            label: 'Home',
+          BottomNavigationBarItem(
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, HomeScreen.routeName);
+              },
+              child: Column(
+                children: const [
+                  Icon(Icons.home, color: primaryColor),
+                  Text('Home'),
+                ],
+              ),
+            ),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, SearchScreen.routeName);
               },
-              child: const Icon(
-                Icons.search,
+              child: Column(
+                children: const [
+                  Icon(Icons.search),
+                  Text('Search'),
+                ],
               ),
             ),
-            label: 'Search',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, SavedScreen.routeName);
               },
-              child: const Icon(
-                Icons.bookmark_border,
+              child: Column(
+                children: const [
+                  Icon(Icons.bookmark_border),
+                  Text('Saved'),
+                ],
               ),
             ),
-            label: 'Saved',
+            label: '',
           ),
         ],
       ),

@@ -58,18 +58,20 @@ class _StreamScreenState extends State<StreamScreen> {
                 child: CircularProgressIndicator(),
               );
             case MyState.loaded:
-              return YoutubePlayerBuilder(
-                player: YoutubePlayer(controller: controller),
-                builder: (context, player) {
-                  return Column(
-                    children: [
-                      // some other widgets or UI elements
-                      Expanded(
-                        child: player,
-                      ),
-                    ],
-                  );
-                },
+              return SafeArea(
+                child: YoutubePlayerBuilder(
+                  player: YoutubePlayer(controller: controller),
+                  builder: (context, player) {
+                    return Column(
+                      children: [
+                        // some other widgets or UI elements
+                        Expanded(
+                          child: player,
+                        ),
+                      ],
+                    );
+                  },
+                ),
               );
 
             default:
