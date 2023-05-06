@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "375590425557",
+    "project_id": "mini-project-cinebuy",
+    "storage_bucket": "mini-project-cinebuy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375590425557:android:d51140df19f9a128d6635c",
+        "android_client_info": {
+          "package_name": "com.example.cinebuy_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375590425557-jjt0fjir1q2st9qb56c9d6tadnn4s625.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeStLQcwzNOxa3uHG3cjYvRqLt4bSYnIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375590425557-jjt0fjir1q2st9qb56c9d6tadnn4s625.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
