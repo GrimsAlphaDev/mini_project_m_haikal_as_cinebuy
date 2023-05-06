@@ -243,9 +243,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, SearchScreen.routeName);
-              },
+              onTap: () {},
               child: Column(
                 children: const [
                   Icon(Icons.search, color: primaryColor),

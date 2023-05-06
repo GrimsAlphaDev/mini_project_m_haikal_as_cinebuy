@@ -232,9 +232,7 @@ class _SavedScreenState extends State<SavedScreen> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, SavedScreen.routeName);
-              },
+              onTap: () {},
               child: Column(
                 children: const [
                   Icon(Icons.bookmark_border, color: primaryColor),

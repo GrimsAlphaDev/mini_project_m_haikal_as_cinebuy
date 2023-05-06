@@ -258,9 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, HomeScreen.routeName);
-              },
+              onTap: () {},
               child: Column(
                 children: const [
                   Icon(Icons.home, color: primaryColor),
