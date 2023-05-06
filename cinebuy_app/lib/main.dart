@@ -11,6 +11,7 @@ import 'package:cinebuy_app/view/screen/saved/saved_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
 import 'package:cinebuy_app/view/screen/splash/splash_screen.dart';
+import 'package:cinebuy_app/view/screen/splash/welcome_splash_screen.dart';
 import 'package:cinebuy_app/view/screen/stream/stream_screen.dart';
 import 'package:cinebuy_app/view/screen/stream/stream_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
                 title: '',
               ),
           SplashScreen.routeName: (context) => const SplashScreen(),
+          WelcomeScreen.routeName: (context) => const WelcomeScreen(),
         },
       ),
     );

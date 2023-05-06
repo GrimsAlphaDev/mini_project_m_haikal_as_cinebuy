@@ -15,18 +15,18 @@ class AuthService {
     }
   }
 
-  User? _userFromFirebase(auth.User? user) {
+  UserModel? _userFromFirebase(auth.User? user) {
     if (user == null) {
       return null;
     }
-    return User(uid: user.uid, email: user.email);
+    return UserModel(uid: user.uid, email: user.email);
   }
 
-  Stream<User?>? get user {
+  Stream<UserModel?>? get user {
     return _firebaseAuth.authStateChanges().map(_userFromFirebase);
   }
 
-  Future<User?> signInWithEmailAndPassword(
+  Future<UserModel?> signInWithEmailAndPassword(
       {required String email,
       required String password,
       required context}) async {
@@ -54,7 +54,7 @@ class AuthService {
     return null;
   }
 
-  Future<User?> createUserWithEmailAndPassword(
+  Future<UserModel?> createUserWithEmailAndPassword(
       {required String email,
       required String password,
       required context}) async {

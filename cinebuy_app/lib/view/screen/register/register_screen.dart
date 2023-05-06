@@ -242,7 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const Text('Sudah Memiliki Akun ? '),
                       GestureDetector(
                         onTap: () {
-                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.of(context).pop();
                         },
                         child: const Text(
                           "Login Sekarang",
