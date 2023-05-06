@@ -9,8 +9,8 @@ class HomeViewModel with ChangeNotifier {
 
   final MoviesApi service = MoviesApi();
 
-  late List<MovieModel> movies;
-  late List<MovieModel> latestMovies;
+  List<MovieModel> movies = [];
+  List<MovieModel> latestMovies = [];
 
   void getTrendingMovies() async {
     myState = MyState.initial;

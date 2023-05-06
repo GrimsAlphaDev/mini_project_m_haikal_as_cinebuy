@@ -1,4 +1,4 @@
-import 'package:cinebuy_app/utils/wrapper/wrapper.dart';
+import 'package:cinebuy_app/view/screen/splash/welcome_splash_screen.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: const Color.fromARGB(255, 187, 99, 202),
       showLoader: true,
       loadingText: const Text("Loading..."),
-      navigator: const Wrapper(),
-      durationInSeconds: 5,
+      navigator: const WelcomeScreen(),
+      durationInSeconds: 3,
     );
   }
 }
