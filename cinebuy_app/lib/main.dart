@@ -1,3 +1,4 @@
+import 'package:cinebuy_app/model/provider/buy_film_provider.dart';
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firebase_options.dart';
 import 'package:cinebuy_app/model/service/firestore_service.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider<FirestoreService>(
           create: (_) => FirestoreService(),
+        ),
+        ListenableProvider<BuyFilmProvider>(
+          create: (_) => BuyFilmProvider(),
         ),
         ListenableProvider(
           create: (_) => SavedViewModel(),
