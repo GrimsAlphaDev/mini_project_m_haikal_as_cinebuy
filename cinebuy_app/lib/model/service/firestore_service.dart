@@ -6,19 +6,22 @@ class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   bool successAddMovie = false;
 
-  Future<void> saveMovie(OwnedMovieModel movie) async {
+  Future<bool> saveMovie(OwnedMovieModel movie) async {
     final exist = await doesMovieExist(movie);
     if (exist) {
       debugPrint('Movie already exist');
       successAddMovie = false;
+      return successAddMovie;
     } else {
       debugPrint('Movie does not exist');
       try {
         _db.collection('movies').doc(movie.ownedMovieId).set(movie.createMap());
         successAddMovie = true;
+        return successAddMovie;
       } catch (e) {
         debugPrint(e.toString());
       }
+      return successAddMovie;
     }
   }
 

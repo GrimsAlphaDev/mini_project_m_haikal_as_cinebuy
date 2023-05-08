@@ -49,6 +49,7 @@ dependencies:
   mockito: ^5.4.0
   build_runner: ^2.3.3
   animated_text_kit: ^4.2.2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
