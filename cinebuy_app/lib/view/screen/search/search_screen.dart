@@ -24,6 +24,13 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    final provider = Provider.of<SearchViewModel>(context, listen: false);
+    provider.movies = [];
+    super.initState();
+  }
+
   final _formkey = GlobalKey<FormState>();
   final TextEditingController _searchController = TextEditingController();
 
@@ -49,10 +56,8 @@ class _SearchScreenState extends State<SearchScreen> {
               },
               onSelected: (String value) {
                 // Handle menu item selection
-                switch (value) {
-                  case 'logout':
-                    confirmLogout(context, authService);
-                    break;
+                if (value == 'logout') {
+                  confirmLogout(context, authService);
                 }
               },
               offset: const Offset(0, 40),
@@ -186,7 +191,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ),
                                               const SizedBox(height: 5),
                                               Text(
-                                                'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)}',
+                                                'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)} / 10',
                                                 style: const TextStyle(
                                                   fontSize: 12,
                                                   color: Colors.grey,

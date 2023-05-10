@@ -10,7 +10,7 @@ class SavedViewModel with ChangeNotifier {
 
   late List<OwnedMovieModel> movies;
 
-  void getMovies(String email) async {
+  Future<void> getMovies(String email) async {
     myState = MyState.initial;
     notifyListeners();
     try {
@@ -22,13 +22,12 @@ class SavedViewModel with ChangeNotifier {
       myState = MyState.loaded;
       notifyListeners();
     } catch (e) {
-      debugPrint(e.toString());
       myState = MyState.failed;
       notifyListeners();
     }
   }
 
-  void deleteMovies(String ownedMovieid, String email) async {
+  Future<void> deleteMovies(String ownedMovieid, String email) async {
     myState = MyState.initial;
     notifyListeners();
 
@@ -42,7 +41,6 @@ class SavedViewModel with ChangeNotifier {
       myState = MyState.loaded;
       notifyListeners();
     } catch (e) {
-      debugPrint(e.toString());
       myState = MyState.failed;
       notifyListeners();
     }

@@ -1,7 +1,7 @@
 import 'package:cinebuy_app/model/movies_model.dart';
 import 'package:cinebuy_app/model/owned_movies_model.dart';
-import 'package:cinebuy_app/model/provider/buy_film_provider.dart';
 import 'package:cinebuy_app/model/service/auth_service.dart';
+import 'package:cinebuy_app/provider/buy_movie_profider.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
 import 'package:cinebuy_app/utils/formatting/date_format.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
@@ -17,7 +17,7 @@ Future<void> detailAlertDialog(
   final authService = Provider.of<AuthService>(context, listen: false);
   final String email = authService.getUserLoggegIn();
   const uuid = Uuid();
-  final provider = Provider.of<BuyFilmProvider>(context, listen: false);
+  final provider = Provider.of<BuyMovieProvider>(context, listen: false);
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -77,7 +77,7 @@ Future<void> detailAlertDialog(
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Rating : ${movies.voteAverage?.toStringAsFixed(2)}',
+                          'Rating : ${movies.voteAverage?.toStringAsFixed(2)} / 10',
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,

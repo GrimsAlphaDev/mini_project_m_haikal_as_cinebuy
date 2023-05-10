@@ -1,6 +1,5 @@
 import 'package:cinebuy_app/model/owned_movies_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -9,19 +8,16 @@ class FirestoreService {
   Future<bool> saveMovie(OwnedMovieModel movie) async {
     final exist = await doesMovieExist(movie);
     if (exist) {
-      debugPrint('Movie already exist');
       successAddMovie = false;
       return successAddMovie;
     } else {
-      debugPrint('Movie does not exist');
       try {
         _db.collection('movies').doc(movie.ownedMovieId).set(movie.createMap());
         successAddMovie = true;
         return successAddMovie;
       } catch (e) {
-        debugPrint(e.toString());
+        rethrow;
       }
-      return successAddMovie;
     }
   }
 
