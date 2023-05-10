@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
+import 'package:cinebuy_app/utils/formatting/date_format.dart';
 import 'package:cinebuy_app/utils/state/finite_state.dart';
 import 'package:cinebuy_app/utils/widget/confirm_delete_alert.dart';
 import 'package:cinebuy_app/utils/widget/confirm_logout_alert.dart';
@@ -35,7 +36,7 @@ class _SavedScreenState extends State<SavedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthService>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -55,10 +56,8 @@ class _SavedScreenState extends State<SavedScreen> {
               },
               onSelected: (String value) {
                 // Handle menu item selection
-                switch (value) {
-                  case 'logout':
-                    confirmLogout(context, authService);
-                    break;
+                if (value == 'logout') {
+                  confirmLogout(context, authService);
                 }
               },
               offset: const Offset(0, 40),
@@ -158,7 +157,10 @@ class _SavedScreenState extends State<SavedScreen> {
                                           ),
                                         ),
                                         subtitle: Text(
-                                          'Released on : ${provider.movies[index].releaseDate}',
+                                          'Released : ${formatDate(
+                                            date: provider
+                                                .movies[index].releaseDate,
+                                          )}',
                                           style: const TextStyle(
                                             fontSize: 14,
                                           ),
@@ -172,8 +174,6 @@ class _SavedScreenState extends State<SavedScreen> {
                                                 provider
                                                     .movies[index].userEmail!,
                                                 provider.movies[index].title);
-
-                                            debugPrint('Delete Clicked');
                                           },
                                           icon: const Icon(
                                             Icons.delete,

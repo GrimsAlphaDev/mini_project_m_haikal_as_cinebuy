@@ -42,13 +42,13 @@ class MockAuthService extends _i1.Mock implements _i2.AuthService {
         returnValueForMissingStub: null,
       );
   @override
-  void getUserLoggegIn() => super.noSuchMethod(
+  String getUserLoggegIn() => (super.noSuchMethod(
         Invocation.method(
           #getUserLoggegIn,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: '',
+      ) as String);
   @override
   _i3.Future<_i4.UserModel?> signInWithEmailAndPassword({
     required String? email,

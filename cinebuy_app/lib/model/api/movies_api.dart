@@ -1,7 +1,6 @@
 import 'package:cinebuy_app/model/movies_model.dart';
 import 'package:cinebuy_app/utils/constant/api_key.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class MoviesApi {
   final Dio dio = Dio();
@@ -21,7 +20,6 @@ class MoviesApi {
 
       return movies;
     } catch (e) {
-      debugPrint(e.toString());
       rethrow;
     }
   }
@@ -38,7 +36,6 @@ class MoviesApi {
 
       return latestMovies;
     } catch (e) {
-      debugPrint(e.toString());
       rethrow;
     }
   }
@@ -55,7 +52,6 @@ class MoviesApi {
 
       return movies;
     } catch (e) {
-      debugPrint(e.toString());
       rethrow;
     }
   }

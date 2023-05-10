@@ -6,13 +6,15 @@ import 'package:quickalert/quickalert.dart';
 class AuthService {
   final auth.FirebaseAuth _firebaseAuth = auth.FirebaseAuth.instance;
 
-  String email = '';
+  late String email;
 
-  void getUserLoggegIn() {
+  String getUserLoggegIn() {
     final user = _firebaseAuth.currentUser;
     if (user != null) {
       email = user.email!;
+      return email;
     }
+    return 'Tidak ada user yang login';
   }
 
   UserModel? _userFromFirebase(auth.User? user) {
@@ -43,7 +45,6 @@ class AuthService {
       email = credential.user!.email!;
       return _userFromFirebase(credential.user);
     } catch (e) {
-      debugPrint(e.toString());
       QuickAlert.show(
         context: context,
         type: QuickAlertType.error,
@@ -71,7 +72,6 @@ class AuthService {
       );
       return _userFromFirebase(credential.user);
     } catch (e) {
-      debugPrint(e.toString());
       QuickAlert.show(
         context: context,
         type: QuickAlertType.error,
@@ -83,6 +83,7 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    return await _firebaseAuth.signOut();
+    await _firebaseAuth.signOut();
+    
   }
 }

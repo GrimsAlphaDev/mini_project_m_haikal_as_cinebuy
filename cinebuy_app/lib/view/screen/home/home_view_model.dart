@@ -12,7 +12,7 @@ class HomeViewModel with ChangeNotifier {
   List<MovieModel> movies = [];
   List<MovieModel> latestMovies = [];
 
-  void getTrendingMovies() async {
+  Future<void> getTrendingMovies() async {
     myState = MyState.initial;
     notifyListeners();
     try {
@@ -21,13 +21,9 @@ class HomeViewModel with ChangeNotifier {
 
       movies = await service.fetchTrendingMovies();
 
-      // remove 10 item from movies list
-      movies.removeRange(10, movies.length);
-
       myState = MyState.loaded;
       notifyListeners();
     } catch (e) {
-      debugPrint(e.toString());
       if (e is DioError) {
         e.response!.statusCode;
       }
@@ -36,7 +32,7 @@ class HomeViewModel with ChangeNotifier {
     }
   }
 
-  void getLatestMovies() async {
+  Future<void> getLatestMovies() async {
     myState = MyState.initial;
     notifyListeners();
     try {
@@ -48,7 +44,6 @@ class HomeViewModel with ChangeNotifier {
       myState = MyState.loaded;
       notifyListeners();
     } catch (e) {
-      debugPrint(e.toString());
       if (e is DioError) {
         e.response!.statusCode;
       }

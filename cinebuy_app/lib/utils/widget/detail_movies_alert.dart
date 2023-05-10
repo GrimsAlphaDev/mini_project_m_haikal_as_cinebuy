@@ -1,21 +1,23 @@
 import 'package:cinebuy_app/model/movies_model.dart';
 import 'package:cinebuy_app/model/owned_movies_model.dart';
 import 'package:cinebuy_app/model/service/auth_service.dart';
-import 'package:cinebuy_app/model/service/firestore_service.dart';
+import 'package:cinebuy_app/provider/buy_movie_profider.dart';
 import 'package:cinebuy_app/utils/constant/colors.dart';
+import 'package:cinebuy_app/utils/formatting/date_format.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:uuid/uuid.dart';
 
-Future<void> detailAlertDialog(BuildContext context, MovieModel movies,) async {
-  final firestoreService =
-      Provider.of<FirestoreService>(context, listen: false);
+Future<void> detailAlertDialog(
+  BuildContext context,
+  MovieModel movies,
+) async {
   final authService = Provider.of<AuthService>(context, listen: false);
-  authService.getUserLoggegIn();
-
+  final String email = authService.getUserLoggegIn();
   const uuid = Uuid();
+  final provider = Provider.of<BuyMovieProvider>(context, listen: false);
   return showDialog<void>(
     context: context,
     barrierDismissible: false, // user must tap button!
@@ -75,7 +77,7 @@ Future<void> detailAlertDialog(BuildContext context, MovieModel movies,) async {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'Rating : ${movies.voteAverage?.toStringAsFixed(2)}',
+                          'Rating : ${movies.voteAverage?.toStringAsFixed(2)} / 10',
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey,
@@ -89,7 +91,7 @@ Future<void> detailAlertDialog(BuildContext context, MovieModel movies,) async {
                           textAlign: TextAlign.justify,
                         ),
                         Text(
-                          "Released : ${movies.releaseDate ?? ''}",
+                          'Released : ${formatDate(date: movies.releaseDate ?? '')}',
                           style: const TextStyle(
                             fontSize: 14,
                             color: primaryColor,
@@ -99,22 +101,20 @@ Future<void> detailAlertDialog(BuildContext context, MovieModel movies,) async {
                         const SizedBox(height: 15),
                         GestureDetector(
                           onTap: () async {
-                            OwnedMovieModel selectedMovie = OwnedMovieModel(
-                              userEmail: authService.email,
-                              ownedMovieId: uuid.v4(),
-                              movieId: movies.id!,
-                              title: movies.title!,
-                              voteAverage: movies.voteAverage!,
-                              releaseDate: movies.releaseDate!,
-                              posterPath:
-                                  'https://image.tmdb.org/t/p/w500${movies.posterPath}',
-                              overview: movies.overview!,
+                            await provider.saveMovies(
+                              ownedMovieModel: OwnedMovieModel(
+                                  ownedMovieId: uuid.v4(),
+                                  movieId: movies.id!,
+                                  title: movies.title!,
+                                  voteAverage: movies.voteAverage!,
+                                  releaseDate: movies.releaseDate!,
+                                  posterPath:
+                                      'https://image.tmdb.org/t/p/w500${movies.posterPath}',
+                                  userEmail: email,
+                                  overview: movies.overview!),
                             );
-                            await firestoreService.saveMovie(selectedMovie);
-                            debugPrint(
-                                'Movie Added : ${firestoreService.successAddMovie}');
                             if (context.mounted) {
-                              if (firestoreService.successAddMovie) {
+                              if (provider.isSaved) {
                                 Navigator.of(context).pop();
                                 Navigator.of(context)
                                     .pushNamed(SavedScreen.routeName);

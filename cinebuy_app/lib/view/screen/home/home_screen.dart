@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthService>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -51,10 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               onSelected: (String value) {
                 // Handle menu item selection
-                switch (value) {
-                  case 'logout':
-                    confirmLogout(context, authService);
-                    break;
+                if (value == 'logout') {
+                  confirmLogout(context, authService);
                 }
               },
               offset: const Offset(0, 40),
@@ -114,19 +112,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 10),
-                                  Text(
-                                    '${provider.movies[index].title}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)}',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey,
+                                  SizedBox(
+                                    width: 300,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${provider.movies[index].title}',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          'Rating : ${provider.movies[index].voteAverage?.toStringAsFixed(2)} / 10',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -215,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                           const SizedBox(height: 5),
                                           Text(
-                                            'Rating : ${provider.latestMovies[index].voteAverage?.toStringAsFixed(2)}',
+                                            'Rating : ${provider.latestMovies[index].voteAverage?.toStringAsFixed(2)} / 10',
                                             style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.grey,
