@@ -56,10 +56,8 @@ class _SavedScreenState extends State<SavedScreen> {
               },
               onSelected: (String value) {
                 // Handle menu item selection
-                switch (value) {
-                  case 'logout':
-                    confirmLogout(context, authService);
-                    break;
+                if (value == 'logout') {
+                  confirmLogout(context, authService);
                 }
               },
               offset: const Offset(0, 40),
@@ -176,8 +174,6 @@ class _SavedScreenState extends State<SavedScreen> {
                                                 provider
                                                     .movies[index].userEmail!,
                                                 provider.movies[index].title);
-
-                                            debugPrint('Delete Clicked');
                                           },
                                           icon: const Icon(
                                             Icons.delete,

@@ -10,9 +10,7 @@ class StreamViewModel with ChangeNotifier {
   String videoUrl = '';
   dynamic videoId;
 
-  get title => null;
-
-  void getStreamMovies(String query) async {
+  Future<void> getStreamMovies(String query) async {
     myState = MyState.initial;
     notifyListeners();
     try {
@@ -34,7 +32,6 @@ class StreamViewModel with ChangeNotifier {
       myState = MyState.loaded;
       notifyListeners();
     } catch (e) {
-      debugPrint(e.toString());
       if (e is DioError) {
         e.response!.statusCode;
       }

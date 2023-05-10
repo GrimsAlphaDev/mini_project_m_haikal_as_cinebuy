@@ -1,7 +1,7 @@
-import 'package:cinebuy_app/model/provider/buy_film_provider.dart';
 import 'package:cinebuy_app/model/service/auth_service.dart';
 import 'package:cinebuy_app/model/service/firebase_options.dart';
 import 'package:cinebuy_app/model/service/firestore_service.dart';
+import 'package:cinebuy_app/provider/buy_movie_profider.dart';
 import 'package:cinebuy_app/utils/wrapper/wrapper.dart';
 import 'package:cinebuy_app/view/screen/home/home_screen.dart';
 import 'package:cinebuy_app/view/screen/home/home_view_model.dart';
@@ -11,7 +11,6 @@ import 'package:cinebuy_app/view/screen/saved/saved_screen.dart';
 import 'package:cinebuy_app/view/screen/saved/saved_view_model.dart';
 import 'package:cinebuy_app/view/screen/search/search_screen.dart';
 import 'package:cinebuy_app/view/screen/search/search_view_model.dart';
-import 'package:cinebuy_app/view/screen/splash/splash_screen.dart';
 import 'package:cinebuy_app/view/screen/splash/welcome_splash_screen.dart';
 import 'package:cinebuy_app/view/screen/stream/stream_screen.dart';
 import 'package:cinebuy_app/view/screen/stream/stream_view_model.dart';
@@ -49,8 +48,8 @@ class MyApp extends StatelessWidget {
         Provider<FirestoreService>(
           create: (_) => FirestoreService(),
         ),
-        ListenableProvider<BuyFilmProvider>(
-          create: (_) => BuyFilmProvider(),
+        ListenableProvider<BuyMovieProvider>(
+          create: (_) => BuyMovieProvider(),
         ),
         ListenableProvider(
           create: (_) => SavedViewModel(),
@@ -63,7 +62,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Cinebuy',
         theme: ThemeData.dark(useMaterial3: true),
-        initialRoute: SplashScreen.routeName,
+        initialRoute: WelcomeScreen.routeName,
         routes: {
           Wrapper.routeName: (context) => const Wrapper(),
           LoginScreen.routeName: (context) => const LoginScreen(),
@@ -74,7 +73,6 @@ class MyApp extends StatelessWidget {
           StreamScreen.routeName: (context) => const StreamScreen(
                 title: '',
               ),
-          SplashScreen.routeName: (context) => const SplashScreen(),
           WelcomeScreen.routeName: (context) => const WelcomeScreen(),
         },
       ),

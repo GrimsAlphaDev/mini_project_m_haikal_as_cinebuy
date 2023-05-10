@@ -11,7 +11,7 @@ class SearchViewModel with ChangeNotifier {
 
   late List<MovieModel> movies;
 
-  void getSearchMovies(String query) async {
+  Future<void> getSearchMovies(String query) async {
     myState = MyState.initial;
     notifyListeners();
     try {
@@ -23,7 +23,6 @@ class SearchViewModel with ChangeNotifier {
       myState = MyState.loaded;
       notifyListeners();
     } catch (e) {
-      debugPrint(e.toString());
       if (e is DioError) {
         e.response!.statusCode;
       }
